@@ -27,6 +27,7 @@ function App() {
     };
 
     return (
+
         <div>
             <h1>Lista de Lutadores</h1>
             <ul>
