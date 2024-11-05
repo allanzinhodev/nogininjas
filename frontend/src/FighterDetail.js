@@ -33,22 +33,28 @@ function FighterDetail({ fighterId }) {
     console.log(fighter);
 
     return (
-        <Container className='fighterCard'>
+        <Container>
             {fighter ? (
-                <Row>
-                    <Col md = {4}>
-                        <Image src={`../figther/thumb/${fighter.id}.png`} fluid />
-                    </Col>
-                    <Col md ={8}>
-                        <h1>{fighter.name}</h1>
-                        <strong>Altura:</strong> {fighter.height}<br />
-                        <strong>País:</strong> {fighter.country}<br />
-                        <strong>Idade:</strong> {fighter.age}<br />
-                        <strong>Equipe:</strong> {fighter.team}<br />
-                        <strong>Sobre:</strong> {fighter.about}
-                    </Col>
-                </Row>
-
+                <>
+                    <Row className='fighterCard'>
+                        <Col md={4}>
+                            <Image src={`../figther/thumb/${fighter.id}.png`} fluid />
+                        </Col>
+                        <Col className='my-4 infos' md={8}>
+                            <h1 className='text-uppercase pt-4'>{fighter.name}</h1><br />
+                            <section className='titulo'>
+                                <h5 className='titulo'>Altura</h5> {fighter.height}<br />
+                            </section>
+                            <strong>País:</strong> {fighter.country}<br />
+                            <strong>Idade:</strong> {fighter.age}<br />
+                            <strong>Equipe:</strong> {fighter.team}<br />
+                        </Col>
+                    </Row>
+                    <Container className='about my-4'>
+                        <h2 className='text-uppercase'>ABOUT {fighter.name}</h2>
+                        {fighter.about}
+                    </Container>
+                </>
             ) : (
                 <Alert variant="warning">Lutador não encontrado.</Alert>
             )}
