@@ -51,7 +51,7 @@ function FighterDetail({ fighterId }) {
                         </Col>
                     </Row>
                     <Container className='about my-4'>
-                        <h2 className='text-uppercase'>ABOUT {fighter.name}</h2>
+                        <h2 className='text-uppercase'>Sobre {fighter.name}</h2>
                         {fighter.about}
                     </Container>
                 </>

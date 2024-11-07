@@ -1,13 +1,20 @@
 import React from 'react';
+import MyNavbar from './MyNavbar';
+import FighterFights from './FighterFights';
 import FighterDetail from './FighterDetail';
+import Footer from './Footer';
 
 function App() {
-    const fighterId = 1; // Altere este ID conforme necessário
+    const fighterId = 1;
 
     return (
         <div>
-            <h1>Detalhes do Lutador</h1>
-            <FighterDetail fighterId={fighterId} />
+            <MyNavbar />
+            <div className="content">
+                <FighterDetail fighterId={fighterId} />
+                <FighterFights fighterId={fighterId}/>
+            </div>
+            <Footer /> 
         </div>
     );
 }

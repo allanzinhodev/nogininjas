@@ -9,7 +9,11 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Criação do Banco de Dados
 - [x] Criação de requisições para testes
 - [x] Adição e refatoração do `<React Bootstrap>` ao projeto
-- [ ] finalizar o Profile Card do Lutador
+- [x] Implementar Lista de Lutas de lutador
+- [x] Implementar Header / Footer
+- [ ] Criar estatisticas de finalizações
+- [ ] Corrigir e organizar front end
+- [ ] finalizar o Profile Card do Lutador junto
 - [ ] Gerar um Deploy de acompanhamento do projeto
 
 ## 💻 Pré-requisitos
