@@ -11,6 +11,8 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Adição e refatoração do `<React Bootstrap>` ao projeto
 - [x] Implementar Lista de Lutas de lutador
 - [x] Implementar Header / Footer
+- [x] Implementar React Social Icons
+- [ ] Disponibilizar Banco de Dados
 - [ ] Criar estatisticas de finalizações
 - [ ] Corrigir e organizar front end
 - [ ] finalizar o Profile Card do Lutador junto
