@@ -6,15 +6,16 @@ function FighterDetail({ fighterId }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const baseURL = process.env.REACT_APP_API_BASE_URL;
+
     useEffect(() => {
         async function fetchFighter() {
             try {
-                const response = await fetch(`http://localhost:3000/fighters/${fighterId}`);
+                const response = await fetch(`${baseURL}/fighters/${fighterId}`);
                 if (!response.ok) {
                     throw new Error('Lutador não encontrado');
                 }
                 const data = await response.json();
-                console.log(data); // Verifique a estrutura dos dados
                 setFighter(data);
             } catch (error) {
                 setError(error.message);
@@ -24,13 +25,10 @@ function FighterDetail({ fighterId }) {
         }
 
         fetchFighter();
-    }, [fighterId]);
+    }, [fighterId, baseURL]);
 
     if (loading) return <Spinner animation="border" variant="primary" />;
     if (error) return <Alert variant="danger">Erro: {error}</Alert>;
-
-    // Adicione este console.log para verificar o que está armazenado em fighter
-    console.log(fighter);
 
     return (
         <Container>

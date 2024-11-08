@@ -6,10 +6,12 @@ function FighterFights({ fighterId }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const baseURL = process.env.REACT_APP_API_BASE_URL;
+
     useEffect(() => {
         async function fetchFights() {
             try {
-                const response = await fetch(`http://localhost:3000/fighters/${fighterId}/fights`);
+                const response = await fetch(`${baseURL}/fighters/${fighterId}/fights`);
                 if (!response.ok) {
                     throw new Error('Nenhuma luta encontrada para este lutador');
                 }
@@ -17,11 +19,10 @@ function FighterFights({ fighterId }) {
                 
                 // Adiciona o nome do oponente para cada luta
                 const fightsWithOpponentName = await Promise.all(data.map(async (fight) => {
-                    // Corrigindo a lógica para identificar o opponentId corretamente
                     const opponentId = fight.fighter_one === fighterId ? fight.fighter_two : fight.fighter_one;
                     
                     // Fazer a requisição para obter os dados do oponente
-                    const opponentResponse = await fetch(`http://localhost:3000/fighters/${opponentId}`);
+                    const opponentResponse = await fetch(`${baseURL}/fighters/${opponentId}`);
                     const opponentData = await opponentResponse.json();
                     
                     return { ...fight, opponentId, opponentName: opponentData.name };
@@ -36,7 +37,7 @@ function FighterFights({ fighterId }) {
         }
 
         fetchFights();
-    }, [fighterId]);
+    }, [fighterId, baseURL]);
 
     if (loading) return <Spinner animation="border" variant="primary" />;
     if (error) return <Alert variant="danger">Erro: {error}</Alert>;
