@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Col, Row, Spinner, Alert, Image } from 'react-bootstrap';
 
-const FighterDetails = ({ fighterId }) => {
+const FighterDetail = ({ fighterId }) => {
     const [fighter, setFighter] = useState(null);
     const [error, setError] = useState(null);
   
