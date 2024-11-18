@@ -12,7 +12,6 @@ function App() {
         <div>
             <MyNavbar />
             <div className="content">
-                <FightersList/>
                 <FighterDetail fighterId={fighterId} />
                 <FighterFights fighterId={fighterId}/>
             </div>
