@@ -15,6 +15,11 @@ const pool = new Pool({
 app.use(cors());
 app.use(express.json());
 
+
+export default function handler(req, res) {
+  res.status(200).json({ message: "Hello from the API!" });
+}
+
 // Rotas de exemplo
 app.get("/api/fighters", async (req, res) => {
   try {
