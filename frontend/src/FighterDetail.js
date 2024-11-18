@@ -1,35 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Col, Row, Spinner, Alert, Image } from 'react-bootstrap';
 
-function FighterDetail({ fighterId }) {
+const FighterDetails = ({ fighterId }) => {
     const [fighter, setFighter] = useState(null);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    const baseURL = process.env.REACT_APP_API_BASE_URL;
-
+  
     useEffect(() => {
-        async function fetchFighter() {
-            try {
-                const response = await fetch(`${baseURL}/fighters/${fighterId}`);
-                if (!response.ok) {
-                    throw new Error('Lutador não encontrado');
-                }
-                const data = await response.json();
-                setFighter(data);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
+      // A URL do endpoint, incluindo o id do lutador
+      const url = `/api/getFighters?id=${fighterId}`;
+  
+      const fetchFighter = async () => {
+        try {
+          const response = await fetch(url);
+  
+          // Se a resposta for bem-sucedida
+          if (response.ok) {
+            const data = await response.json();
+            setFighter(data);  // Define os dados do lutador no estado
+          } else {
+            // Caso não tenha sucesso
+            setError('Lutador não encontrado');
+          }
+        } catch (err) {
+          // Em caso de erro na requisição
+          setError('Erro ao buscar o lutador');
+          console.error('Fetch Error:', err);
         }
-
-        fetchFighter();
-    }, [fighterId, baseURL]);
-
-    if (loading) return <Spinner animation="border" variant="primary" />;
-    if (error) return <Alert variant="danger">Erro: {error}</Alert>;
-
+      };
+  
+      // Chama a função para buscar o lutador
+      fetchFighter();
+    }, [fighterId]);  // Atualiza sempre que o fighterId mudar
+  
+    // Renderiza o componente
+    if (error) {
+      return <div>{error}</div>;
+    }
+  
+    if (!fighter) {
+      return <div>Carregando...</div>;
+    }
+        
     return (
         <Container>
             {fighter ? (
