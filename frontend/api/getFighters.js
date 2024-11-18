@@ -9,9 +9,11 @@ export default async function handler(req, res) {
 
   try {
     await client.connect();
-    const result = await client.query('SELECT * FROM fighters');
+    const result = await client.query('SELECT * FROM fighter');
+    console.log('Query Result:', result.rows);  // Log para verificar os dados retornados
     res.status(200).json(result.rows);
   } catch (error) {
+    console.error('Database Connection Error:', error);  // Log do erro
     res.status(500).json({ error: 'Failed to fetch data' });
   } finally {
     await client.end();
