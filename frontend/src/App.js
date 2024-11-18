@@ -1,22 +1,23 @@
-import React from 'react';
-import MyNavbar from './MyNavbar';
-import FighterFights from './FighterFights';
-import FighterDetail from './FighterDetail';
-import Footer from './Footer';
+import React, { useEffect, useState } from "react";
+import { fetchFighters } from "./api";
 
 function App() {
-    const fighterId = 1;
+  const [fighters, setFighters] = useState([]);
 
-    return (
-        <div>
-            <MyNavbar />
-            <div className="content">
-                <FighterDetail fighterId={fighterId} />
-                <FighterFights fighterId={fighterId}/>
-            </div>
-            <Footer /> 
-        </div>
-    );
+  useEffect(() => {
+    fetchFighters().then(setFighters).catch(console.error);
+  }, []);
+
+  return (
+    <div className="container">
+      <h1>Lista de Lutadores</h1>
+      <ul>
+        {fighters.map((fighter) => (
+          <li key={fighter.id}>{fighter.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default App;

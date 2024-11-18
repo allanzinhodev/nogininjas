@@ -16,7 +16,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [ ] Criar estatisticas de finalizações
 - [ ] Corrigir e organizar front end
 - [ ] finalizar o Profile Card do Lutador junto
-- [ ] Gerar um Deploy de acompanhamento do projeto
+- [x] Gerar um Deploy de acompanhamento do projeto na '<Vercel>'
 
 ## 💻 Pré-requisitos
 
