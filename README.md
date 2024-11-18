@@ -12,12 +12,11 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Implementar Lista de Lutas de lutador
 - [x] Implementar Header / Footer
 - [x] Implementar React Social Icons
-- [x] Refatorar a aplicação inteira utilizando '<Next.js>'
 - [ ] Disponibilizar Banco de Dados
 - [ ] Criar estatisticas de finalizações
 - [ ] Corrigir e organizar front end
 - [ ] finalizar o Profile Card do Lutador junto
-- [ ] Gerar um Deploy de acompanhamento do projeto
+- [x] Gerar um Deploy de acompanhamento do projeto na '<Vercel>'
 
 ## 💻 Pré-requisitos
 
