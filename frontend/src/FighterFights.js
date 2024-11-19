@@ -11,22 +11,37 @@ function FighterFights({ fighterId }) {
     useEffect(() => {
         async function fetchFights() {
             try {
-                const response = await fetch(`${baseURL}/fighters/${fighterId}/fights`);
-                if (!response.ok) {
+                // Buscar as lutas do lutador
+                const fightsResponse = await fetch(`${baseURL}/fighters/${fighterId}/fights`);
+                if (!fightsResponse.ok) {
                     throw new Error('Nenhuma luta encontrada para este lutador');
                 }
-                const data = await response.json();
-                
-                // Adiciona o nome do oponente para cada luta
-                const fightsWithOpponentName = await Promise.all(data.map(async (fight) => {
+                const fightsData = await fightsResponse.json();
+
+                // Buscar os dados dos oponentes em uma única requisição
+                const opponentIds = fightsData.map(fight =>
+                    fight.fighter_one === fighterId ? fight.fighter_two : fight.fighter_one
+                );
+                const uniqueOpponentIds = [...new Set(opponentIds)]; // Remove IDs duplicados
+
+                // Buscar dados dos oponentes em lote
+                const opponentsResponse = await fetch(`${baseURL}/fighters?ids=${uniqueOpponentIds.join(',')}`);
+                if (!opponentsResponse.ok) {
+                    throw new Error('Erro ao buscar dados dos oponentes');
+                }
+                const opponentsData = await opponentsResponse.json();
+
+                // Mapear os dados dos oponentes para fácil acesso
+                const opponentsMap = opponentsData.reduce((map, opponent) => {
+                    map[opponent.id] = opponent.name;
+                    return map;
+                }, {});
+
+                // Adicionar o nome do oponente para cada luta
+                const fightsWithOpponentName = fightsData.map(fight => {
                     const opponentId = fight.fighter_one === fighterId ? fight.fighter_two : fight.fighter_one;
-                    
-                    // Fazer a requisição para obter os dados do oponente
-                    const opponentResponse = await fetch(`${baseURL}/fighters/${opponentId}`);
-                    const opponentData = await opponentResponse.json();
-                    
-                    return { ...fight, opponentId, opponentName: opponentData.name };
-                }));
+                    return { ...fight, opponentId, opponentName: opponentsMap[opponentId] };
+                });
 
                 setFights(fightsWithOpponentName);
             } catch (error) {
