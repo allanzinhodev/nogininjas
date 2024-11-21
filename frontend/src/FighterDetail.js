@@ -7,7 +7,7 @@ const FighterDetail = ({ fighterId }) => {
 
     useEffect(() => {
       // A URL do endpoint, incluindo o id do lutador
-      const url = `/api/getFighters?id=${fighterId}`;
+      const url = `/api/getFighterFights?id=${fighterId}`;
 
       const fetchFighter = async () => {
         try {
