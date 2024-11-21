@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
     // Consulta todas as lutas onde o lutador aparece como fighter_one ou fighter_two
     const result = await client.query(
-      `SELECT * FROM fights WHERE fighter_one = $1 OR fighter_two = $1`,
+      `SELECT * FROM fight WHERE fighter_one = $1 OR fighter_two = $1`,
       [id]
     );
 
