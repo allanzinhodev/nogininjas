@@ -4,15 +4,15 @@ import { Container, Col, Row, Spinner, Alert, Image } from 'react-bootstrap';
 const FighterDetail = ({ fighterId }) => {
     const [fighter, setFighter] = useState(null);
     const [error, setError] = useState(null);
-  
+
     useEffect(() => {
       // A URL do endpoint, incluindo o id do lutador
       const url = `/api/getFighters?id=${fighterId}`;
-  
+
       const fetchFighter = async () => {
         try {
           const response = await fetch(url);
-  
+
           // Se a resposta for bem-sucedida
           if (response.ok) {
             const data = await response.json();
@@ -27,20 +27,20 @@ const FighterDetail = ({ fighterId }) => {
           console.error('Fetch Error:', err);
         }
       };
-  
+
       // Chama a função para buscar o lutador
       fetchFighter();
     }, [fighterId]);  // Atualiza sempre que o fighterId mudar
-  
+
     // Renderiza o componente
     if (error) {
       return <div>{error}</div>;
     }
-  
+
     if (!fighter) {
       return <div>Carregando...</div>;
     }
-        
+
     return (
         <Container>
             {fighter ? (
