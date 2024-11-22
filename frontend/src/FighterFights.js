@@ -1,46 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Card, ListGroup, Row, Col, Spinner, Alert } from 'react-bootstrap';
 
-const FighterFights= ({ fighterId }) => {
-    const [fighter, setFighter] = useState(null);
+function FighterFights({ fighterId }) {
+    const [fights, setFights] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const baseURL = process.env.REACT_APP_API_BASE_URL;
 
     useEffect(() => {
-      // A URL do endpoint, incluindo o id do lutador
-      const url = `/api/getFighterFights?id=${fighterId}`;
-
-      const fetchFighter = async () => {
-        try {
-          const response = await fetch(url);
-
-          // Se a resposta for bem-sucedida
-          if (response.ok) {
-            const data = await response.json();
-            setFighter(data);  // Define os dados do lutador no estado
-          } else {
-            // Caso não tenha sucesso
-            setError('Lutador não encontrado');
-          }
-        } catch (err) {
-          // Em caso de erro na requisição
-          setError('Erro ao buscar o lutador');
-          console.error('Fetch Error:', err);
+        async function fetchFights() {
+            try {
+                const response = await fetch(`${baseURL}/getFighterFights?id=${fighterId}`);
+                if (!response.ok) {
+                    throw new Error('Nenhuma luta encontrada para este lutador');
+                }
+                const data = await response.json();
+                
+                // Adiciona o nome do oponente para cada luta
+                const fightsWithOpponentName = await Promise.all(data.map(async (fight) => {
+                    // Corrigindo a lógica para identificar o opponentId corretamente
+                    const opponentId = fight.fighter_one === fighterId ? fight.fighter_two : fight.fighter_one;
+                    
+                    // Fazer a requisição para obter os dados do oponente
+                    const opponentResponse = await fetch(`${baseURL}/getFighter?id=${opponentId}`);
+                    const opponentData = await opponentResponse.json();
+                    
+                    return { ...fight, opponentId, opponentName: opponentData.name };
+                }));
+                setFights(fightsWithOpponentName);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
         }
-      };
-
-      // Chama a função para buscar o lutador
-      fetchFighter();
-    }, [fighterId]);  // Atualiza sempre que o fighterId mudar
-
-    // Renderiza o componente
-    if (error) {
-      return <div>{error}</div>;
-    }
-
-    if (!fighter) {
-      return <div>Carregando...</div>;
-    }
-    
+        fetchFights();
+    }, [fighterId]);
+    if (loading) return <Spinner animation="border" variant="primary" />;
+    if (error) return <Alert variant="danger">Erro: {error}</Alert>;
     return (
         <Container fluid className="mt-4">
             <h2>Lutas do Lutador</h2>
