@@ -1,5 +1,22 @@
 import { Client } from 'pg';
 
+export default function handler(req, res) {
+  // Adicionando cabeçalhos de CORS
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Permite todas as origens
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST'); // Permite métodos específicos
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Permite cabeçalhos específicos
+
+  // Resolvendo requisições OPTIONS (preflight)
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  // Sua lógica principal
+  res.status(200).json({ message: 'Lutas do lutador' });
+}
+
+
 export default async function handler(req, res) {
   const { id } = req.query; // Pegando o ID do lutador da query string
 
