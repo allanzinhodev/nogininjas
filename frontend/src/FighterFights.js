@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Card, ListGroup, Row, Col, Spinner, Alert } from 'react-bootstrap';
+
 function FighterFights({ fighterId }) {
     const [fights, setFights] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const baseURL = process.env.REACT_APP_API_BASE_URL;
+
     useEffect(() => {
         async function fetchFights() {
             try {
