@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Col, Row, Spinner, Alert, Image } from 'react-bootstrap';
+import { Container, Col, Row, Alert, Image } from 'react-bootstrap';
 
 const FighterDetail = ({ fighterId }) => {
     const [fighter, setFighter] = useState(null);
